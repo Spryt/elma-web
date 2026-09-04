@@ -64,6 +64,8 @@ EM.Menu = (function () {
   function drawMenu(ctx, game) {
     const w = game.view.w, h = game.view.h;
     const cx = w / 2;
+    const uis = game.uiScale || 1; // UI font compensation (canvas CSS-scaled down)
+    const mf = (px) => Math.round(px * uis);
 
     // dark background
     ctx.fillStyle = "#0a0f1a";
@@ -71,11 +73,11 @@ EM.Menu = (function () {
 
     // title
     ctx.textAlign = "center";
-    ctx.font = "bold 48px ui-monospace, Menlo, monospace";
+    ctx.font = "bold " + mf(48) + "px ui-monospace, Menlo, monospace";
     ctx.fillStyle = "#7ee081";
     ctx.fillText("ELASTO MANIA", cx, h * 0.25);
 
-    ctx.font = "16px ui-monospace, Menlo, monospace";
+    ctx.font = mf(16) + "px ui-monospace, Menlo, monospace";
     ctx.fillStyle = "#5a6a7a";
     ctx.fillText("browser port", cx, h * 0.25 + 30);
 
@@ -84,7 +86,7 @@ EM.Menu = (function () {
     } else {
       // menu items
       const startY = h * 0.38;
-      const gap = 44;
+      const gap = Math.round(44 * uis);
       const totalItems = PACK_ITEMS.length + 2; // packs + Replays + Settings
 
       for (let i = 0; i < totalItems; i++) {
@@ -92,7 +94,7 @@ EM.Menu = (function () {
         const selected = game.menuCursor === i;
         const prefix = selected ? "▸ " : "  ";
 
-        ctx.font = "20px ui-monospace, Menlo, monospace";
+        ctx.font = mf(20) + "px ui-monospace, Menlo, monospace";
         ctx.textAlign = "center";
 
         if (i < PACK_ITEMS.length) {
@@ -107,19 +109,19 @@ EM.Menu = (function () {
           ctx.fillText(line, cx, y);
         } else if (i === MENU_REPLAYS) {
           const prefix = selected ? "▸ " : "  ";
-          ctx.font = "20px ui-monospace, Menlo, monospace";
+          ctx.font = mf(20) + "px ui-monospace, Menlo, monospace";
           ctx.fillStyle = selected ? "#ffd54f" : "#8fa3c4";
           ctx.fillText(prefix + "Replays WR internals", cx, y);
         } else if (i === MENU_SETTINGS) {
           const prefix = selected ? "▸ " : "  ";
-          ctx.font = "20px ui-monospace, Menlo, monospace";
+          ctx.font = mf(20) + "px ui-monospace, Menlo, monospace";
           ctx.fillStyle = selected ? "#ffd54f" : "#8fa3c4";
           ctx.fillText(prefix + "Settings", cx, y);
         }
       }
 
       // controls hint
-      ctx.font = "13px ui-monospace, Menlo, monospace";
+      ctx.font = mf(13) + "px ui-monospace, Menlo, monospace";
       ctx.fillStyle = "#5a6a7a";
       ctx.fillText("↑↓ select  ·  Enter/Space confirm", cx, h - 30);
     }
@@ -129,9 +131,10 @@ EM.Menu = (function () {
   function drawSettings(ctx, game) {
     const w = game.view.w, h = game.view.h;
     const cx = w / 2;
+    const uis = game.uiScale || 1;
     const s = loadSettings();
 
-    ctx.font = "bold 28px ui-monospace, Menlo, monospace";
+    ctx.font = "bold " + Math.round(28 * uis) + "px ui-monospace, Menlo, monospace";
     ctx.fillStyle = "#ffd54f";
     ctx.fillText("— Settings —", cx, h * 0.32);
 
@@ -142,8 +145,8 @@ EM.Menu = (function () {
     ];
 
     const startY = h * 0.44;
-    const gap = 50;
-    ctx.font = "18px ui-monospace, Menlo, monospace";
+    const gap = Math.round(50 * uis);
+    ctx.font = Math.round(18 * uis) + "px ui-monospace, Menlo, monospace";
     for (let i = 0; i < items.length; i++) {
       const y = startY + i * gap;
       const selected = game.menuCursor === i;
@@ -157,7 +160,7 @@ EM.Menu = (function () {
       ctx.fillText(`[${dot}]`, cx + 120, y);
     }
 
-    ctx.font = "13px ui-monospace, Menlo, monospace";
+    ctx.font = Math.round(13 * uis) + "px ui-monospace, Menlo, monospace";
     ctx.fillStyle = "#5a6a7a";
     ctx.fillText("↑↓ select  ·  Enter/Space toggle  ·  Esc back", cx, h - 30);
   }

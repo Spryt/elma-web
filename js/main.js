@@ -1554,6 +1554,19 @@ EM.Main = (function () {
       last = now;
       if (dt > 0.1) dt = 0.1;
 
+      // UI overlays (menu, level lists) are drawn on the internal 1280x960
+      // canvas, which CSS scales down to fit smaller windows (e.g. laptops).
+      // Compensate so overlay text stays a readable size in CSS pixels:
+      // uiScale = 1/cssScale, clamped to [1, 1.8].
+      if (game.uiScale === undefined) game.uiScale = 1;
+      try {
+        const cssW = canvas.getBoundingClientRect().width;
+        if (cssW > 0) {
+          const cssScale = cssW / canvas.width;
+          game.uiScale = Math.min(1.8, Math.max(1, 1 / cssScale));
+        }
+      } catch (e) { /* keep previous uiScale */ }
+
       // menu: render menu, skip physics
       if (game.showMenu) {
         EM.Menu.drawMenu(ctx, game);

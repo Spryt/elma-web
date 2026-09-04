@@ -153,6 +153,7 @@ EM.Win = (function () {
   // game.finish_time is the real-time seconds.
   function drawFinishScreen(ctx, game) {
     const w = game.view.w, h = game.view.h;
+    const uis = game.uiScale || 1; // UI font compensation
     const levelName = game.level.name || "";
     const levelFile = game._levelFile || levelName;
     const time = game.finish_time;
@@ -179,13 +180,13 @@ EM.Win = (function () {
 
     // title
     ctx.textAlign = "center";
-    ctx.font = "bold 38px ui-monospace, Menlo, monospace";
+    ctx.font = "bold " + Math.round(38 * uis) + "px ui-monospace, Menlo, monospace"
     ctx.fillStyle = "#7ee081";
     ctx.fillText("FINISH!", cx, y);
     y += 40;
 
     // time
-    ctx.font = "22px ui-monospace, Menlo, monospace";
+    ctx.font = Math.round(22 * uis) + "ui-monospace, Menlo, monospace";
     ctx.fillStyle = "#cfe3ff";
     ctx.fillText(`Time: ${fmtTime(time)}`, cx, y);
     y += 36;
@@ -193,7 +194,7 @@ EM.Win = (function () {
     // best time info
     const info = game._winResult;
     if (info && info.improved) {
-      ctx.font = "bold 18px ui-monospace, Menlo, monospace";
+      ctx.font = "bold " + Math.round(18 * uis) + "px ui-monospace, Menlo, monospace"
       ctx.fillStyle = "#ffd54f";
       if (info.best === time) {
         ctx.fillText("★ NEW BEST TIME! ★", cx, y);
@@ -222,12 +223,12 @@ EM.Win = (function () {
 
     // top times — current level
     if (times.length > 0) {
-      ctx.font = "bold 16px ui-monospace, Menlo, monospace";
+      ctx.font = "bold " + Math.round(16 * uis) + "px ui-monospace, Menlo, monospace"
       ctx.fillStyle = "#90caf9";
       ctx.fillText(`— Your Times (${entry.name}) —`, cx, y);
       y += 22;
 
-      ctx.font = "13px ui-monospace, Menlo, monospace";
+      ctx.font = Math.round(13 * uis) + "ui-monospace, Menlo, monospace";
       for (let i = 0; i < times.length; i++) {
         const t = times[i];
         const medal = i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `#${i + 1}`;
@@ -239,7 +240,7 @@ EM.Win = (function () {
     }
 
     y += 10;
-    ctx.font = "14px ui-monospace, Menlo, monospace";
+    ctx.font = Math.round(14 * uis) + "ui-monospace, Menlo, monospace";
     ctx.fillStyle = "#7d8db0";
     const hasReplay = EM.Recorder && EM.Recorder.hasReplay && EM.Recorder.hasReplay(game._levelFile);
     const controls = hasReplay
@@ -255,7 +256,7 @@ EM.Win = (function () {
       const wrCs = EM.Main.getWrTime(apiPack, levelOrder);
       if (wrCs) {
         y += 22;
-        ctx.font = "13px ui-monospace, Menlo, monospace";
+        ctx.font = Math.round(13 * uis) + "ui-monospace, Menlo, monospace";
         ctx.fillStyle = "#5a6a7a";
         ctx.fillText(`World Record: ${fmtTime(wrCs / 100)}`, cx, y);
       }
@@ -264,6 +265,7 @@ EM.Win = (function () {
 
   function drawPauseScreen(ctx, game) {
     const w = game.view.w, h = game.view.h;
+    const uis = game.uiScale || 1; // UI font compensation
     const levelName = game.level.name || "";
     const levelFile = game._levelFile || levelName;
     const time = game.realTime;
@@ -290,19 +292,19 @@ EM.Win = (function () {
 
     // title
     ctx.textAlign = "center";
-    ctx.font = "bold 36px ui-monospace, Menlo, monospace";
+    ctx.font = "bold " + Math.round(36 * uis) + "px ui-monospace, Menlo, monospace"
     ctx.fillStyle = "#cfd8ea";
     ctx.fillText("PAUSED", cx, y);
     y += 36;
 
     // level name
-    ctx.font = "18px ui-monospace, Menlo, monospace";
+    ctx.font = Math.round(18 * uis) + "ui-monospace, Menlo, monospace";
     ctx.fillStyle = "#ffd54f";
     ctx.fillText(cleanName || "Level", cx, y);
     y += 22;
 
     // current time
-    ctx.font = "20px ui-monospace, Menlo, monospace";
+    ctx.font = Math.round(20 * uis) + "ui-monospace, Menlo, monospace";
     ctx.fillStyle = "#cfe3ff";
     ctx.fillText(`Time: ${fmtTime(time)}`, cx, y);
     y += 28;
@@ -310,7 +312,7 @@ EM.Win = (function () {
     // best time
     const best = getBest(levelFile);
     if (best) {
-      ctx.font = "16px ui-monospace, Menlo, monospace";
+      ctx.font = Math.round(16 * uis) + "ui-monospace, Menlo, monospace";
       ctx.fillStyle = "#8fa3c4";
       ctx.fillText(`Best: ${fmtTime(best.best)}  (${best.name})`, cx, y);
       y += 24;
@@ -332,12 +334,12 @@ EM.Win = (function () {
 
     // top times
     if (times.length > 0) {
-      ctx.font = "bold 14px ui-monospace, Menlo, monospace";
+      ctx.font = "bold " + Math.round(14 * uis) + "px ui-monospace, Menlo, monospace"
       ctx.fillStyle = "#90caf9";
       ctx.fillText("— Your Times —", cx, y);
       y += 20;
 
-      ctx.font = "12px ui-monospace, Menlo, monospace";
+      ctx.font = Math.round(12 * uis) + "ui-monospace, Menlo, monospace";
       const show = Math.min(times.length, 5);
       for (let i = 0; i < show; i++) {
         const t = times[i];
@@ -347,14 +349,14 @@ EM.Win = (function () {
         y += 16;
       }
     } else {
-      ctx.font = "13px ui-monospace, Menlo, monospace";
+      ctx.font = Math.round(13 * uis) + "ui-monospace, Menlo, monospace";
       ctx.fillStyle = "#5a6a7a";
       ctx.fillText("No times yet — finish the level to see your best", cx, y);
       y += 18;
     }
 
     y += 8;
-    ctx.font = "13px ui-monospace, Menlo, monospace";
+    ctx.font = Math.round(13 * uis) + "ui-monospace, Menlo, monospace";
     ctx.fillStyle = "#7d8db0";
     ctx.fillText("Esc — continue  ·  M menu  ·  R restart", cx, y);
   }

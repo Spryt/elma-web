@@ -1307,6 +1307,8 @@ EM.Render2 = (function () {
                    EM.Main.LEVELS;
     const total = levels.length;
     const sc = h / 960;
+    const uis = game.uiScale || 1; // UI font compensation when canvas is CSS-scaled down
+    const uiFont = (px) => Math.round(px * sc * uis);
 
     // dark overlay
     ctx.fillStyle = "rgba(4,8,16,0.88)";
@@ -1329,7 +1331,7 @@ EM.Render2 = (function () {
       }
       const packLabel = "ELMAPACK · " + EM.Elmapack.getGroupLabel(game.elmapackGroupIdx);
       ctx.fillStyle = "#cfd8ea";
-      ctx.font = "bold " + Math.round(20 * sc) + "px ui-monospace, Menlo, monospace";
+      ctx.font = "bold " + uiFont(20) + "px ui-monospace, Menlo, monospace"
       ctx.textAlign = "center";
       ctx.fillText(packLabel + "  ·  " + completed + "/" + total + " completed", w / 2, 38 * sc);
 
@@ -1350,7 +1352,7 @@ EM.Render2 = (function () {
 
         // column header
         const genCompleted = gNames.filter((nm, ri) => EM.Win.getBest(game.elmapackLevels[gi.startIdx + ri])).length;
-        ctx.font = "bold " + Math.round(14 * sc) + "px ui-monospace, Menlo, monospace";
+        ctx.font = "bold " + uiFont(14) + "px ui-monospace, Menlo, monospace"
         ctx.textAlign = "center";
         ctx.fillStyle = genCompleted === gi.count ? "#7ddf7d" : "#ffd54f";
         ctx.fillText("ElmaPack " + gi.gen + "  (" + genCompleted + "/" + gi.count + ")", lx + cellW / 2, startY);
@@ -1371,7 +1373,7 @@ EM.Render2 = (function () {
 
           const label = (row + 1) + ". " + nm;
           const timeStr = best ? formatTime(best.best) : "";
-          ctx.font = Math.round(11 * sc) + "px ui-monospace, Menlo, monospace";
+          ctx.font = uiFont(11) + "px ui-monospace, Menlo, monospace"
 
           if (best) {
             ctx.fillStyle = "#7ddf7d";
@@ -1390,14 +1392,14 @@ EM.Render2 = (function () {
 
       // total time banner
       ctx.fillStyle = "#ffd54f";
-      ctx.font = "bold " + Math.round(22 * sc) + "px ui-monospace, Menlo, monospace";
+      ctx.font = "bold " + uiFont(22) + "px ui-monospace, Menlo, monospace"
       ctx.textAlign = "center";
       ctx.fillText("Total: " + formatTimeH(totalTime) + "  (" + completed + "/" + total + ")", w / 2, h - 55 * sc);
 
       // stats + controls
       const stats = EM.Main.getStats ? EM.Main.getStats() : { gamesPlayed: 0, totalPlayTime: 0 };
       ctx.fillStyle = "#5a6a80";
-      ctx.font = Math.round(11 * sc) + "px ui-monospace, Menlo, monospace";
+      ctx.font = uiFont(11) + "px ui-monospace, Menlo, monospace"
       ctx.fillText("played: " + stats.gamesPlayed + "  ·  time: " + formatTimeH(stats.totalPlayTime), w / 2, h - 38 * sc);
       ctx.fillText("↑↓ within gen  ·  ←→ between gens  ·  Enter select  ·  Tab / Esc close", w / 2, h - 22 * sc);
       ctx.textAlign = "left";
@@ -1427,7 +1429,7 @@ EM.Render2 = (function () {
       else { totalTime += 600; } // 10 minutes for uncompleted levels
     }
     ctx.fillStyle = "#cfd8ea";
-    ctx.font = "bold " + Math.round(22 * sc) + "px ui-monospace, Menlo, monospace";
+    ctx.font = "bold " + uiFont(22) + "px ui-monospace, Menlo, monospace"
     ctx.textAlign = "center";
     ctx.fillText(packLabel + "  ·  " + completed + "/" + total + " completed", w / 2, 42 * sc);
 
@@ -1476,7 +1478,7 @@ EM.Render2 = (function () {
         const label = (i + 1) + ". " + displayName;
         const timeStr = best ? formatTime(best.best) : "";
 
-        ctx.font = Math.round(11 * sc) + "px ui-monospace, Menlo, monospace";
+        ctx.font = uiFont(11) + "px ui-monospace, Menlo, monospace"
 
         if (best) {
           ctx.fillStyle = "#7ddf7d";
@@ -1519,20 +1521,20 @@ EM.Render2 = (function () {
 
     // --- total time banner ---
     ctx.fillStyle = "#ffd54f";
-    ctx.font = "bold " + Math.round(28 * sc) + "px ui-monospace, Menlo, monospace";
+    ctx.font = "bold " + uiFont(28) + "px ui-monospace, Menlo, monospace"
     ctx.textAlign = "center";
     ctx.fillText("Total: " + formatTimeH(totalTime) + "  (" + completed + "/" + total + ")", w / 2, h - 70 * sc);
 
     // --- stats ---
     const stats = EM.Main.getStats ? EM.Main.getStats() : { gamesPlayed: 0, totalPlayTime: 0 };
     ctx.fillStyle = "#5a6a80";
-    ctx.font = Math.round(12 * sc) + "px ui-monospace, Menlo, monospace";
+    ctx.font = uiFont(12) + "px ui-monospace, Menlo, monospace"
     ctx.fillText("played: " + stats.gamesPlayed + "  ·  time: " + formatTimeH(stats.totalPlayTime), w / 2, h - 42 * sc);
 
     // --- controls hint ---
     ctx.fillText("↑↓←→ / click  ·  Enter select  ·  Tab / Esc close", w / 2, h - 20 * sc);
     ctx.fillStyle = "#3a4a5a";
-    ctx.font = Math.round(10 * sc) + "px ui-monospace, Menlo, monospace";
+    ctx.font = uiFont(10) + "px ui-monospace, Menlo, monospace"
     ctx.fillText("unfinished levels count as 10 min", w / 2, h - 6 * sc);
     ctx.textAlign = "left";
   }
@@ -1544,6 +1546,8 @@ EM.Render2 = (function () {
     if (!game.showElmapackGroups) return;
     const w = game.view.w, h = game.view.h;
     const sc = h / 960;
+    const uis = game.uiScale || 1;
+    const uiFont = (px) => Math.round(px * sc * uis);
     const groups = EM.Elmapack.ELMAPACK_GROUPS;
     const total = groups.length;
     const totalLvls = EM.Elmapack.totalLevels();
@@ -1554,7 +1558,7 @@ EM.Render2 = (function () {
 
     // title
     ctx.fillStyle = "#cfd8ea";
-    ctx.font = "bold " + Math.round(22 * sc) + "px ui-monospace, Menlo, monospace";
+    ctx.font = "bold " + uiFont(22) + "px ui-monospace, Menlo, monospace"
     ctx.textAlign = "center";
     ctx.fillText("ELMAPACK  ·  " + totalLvls + " levels", w / 2, 42 * sc);
 
@@ -1586,11 +1590,11 @@ EM.Render2 = (function () {
         // label
         const label = EM.Elmapack.getGroupLabel(i);
         const groupTotal = EM.Elmapack.getGroupLevels(i).length;
-        ctx.font = "bold " + Math.round(13 * sc) + "px ui-monospace, Menlo, monospace";
+        ctx.font = "bold " + uiFont(13) + "px ui-monospace, Menlo, monospace"
         ctx.fillStyle = isCursor ? "#ffd54f" : "#cfd8ea";
         ctx.textAlign = "left";
         ctx.fillText(label, lx + 8, ly + cellH * 0.38);
-        ctx.font = Math.round(10 * sc) + "px ui-monospace, Menlo, monospace";
+        ctx.font = uiFont(10) + "px ui-monospace, Menlo, monospace"
         ctx.fillStyle = "#6a7a94";
         ctx.fillText(groupTotal + " levels", lx + 8, ly + cellH * 0.72);
         ctx.textAlign = "left";
@@ -1599,7 +1603,7 @@ EM.Render2 = (function () {
 
     // controls
     ctx.fillStyle = "#5a6a80";
-    ctx.font = Math.round(12 * sc) + "px ui-monospace, Menlo, monospace";
+    ctx.font = uiFont(12) + "px ui-monospace, Menlo, monospace"
     ctx.textAlign = "center";
     ctx.fillText("↑↓←→ / click  ·  Enter select  ·  Esc close", w / 2, h - 30 * sc);
     ctx.textAlign = "left";
@@ -1614,13 +1618,15 @@ EM.Render2 = (function () {
     const total = EM.Main.LEVELS.length;
     const names = EM.Main.getPackNames(EM.Main.LEVELS, 'Level');
     const sc = h / 960;
+    const uis = game.uiScale || 1;
+    const uiFont = (px) => Math.round(px * sc * uis);
 
     ctx.fillStyle = "rgba(4,8,16,0.88)";
     ctx.fillRect(0, 0, w, h);
 
     ctx.textAlign = "center";
     ctx.fillStyle = "#ffd54f";
-    ctx.font = "bold " + Math.round(22 * sc) + "px ui-monospace, Menlo, monospace";
+    ctx.font = "bold " + uiFont(22) + "px ui-monospace, Menlo, monospace"
     ctx.fillText("REPLAYS WR INTERNALS", w / 2, 42 * sc);
 
     const cols = 3;
@@ -1664,7 +1670,7 @@ EM.Render2 = (function () {
 
         const label = `${String(i + 1).padStart(2, "0")}  ${nm}`;
         ctx.fillStyle = isCursor ? "#ffd54f" : "#8a9ab0";
-        ctx.font = Math.round(13 * sc) + "px ui-monospace, Menlo, monospace";
+        ctx.font = uiFont(13) + "px ui-monospace, Menlo, monospace";
         ctx.textAlign = "left";
         ctx.fillText(label, lx + 6, ly + cellH * 0.68);
 
@@ -1678,7 +1684,7 @@ EM.Render2 = (function () {
     }
 
     ctx.fillStyle = "#5a6a80";
-    ctx.font = Math.round(12 * sc) + "px ui-monospace, Menlo, monospace";
+    ctx.font = uiFont(12) + "px ui-monospace, Menlo, monospace";
     ctx.textAlign = "center";
     ctx.fillText("↑↓←→  ·  Enter watch replay  ·  Esc close", w / 2, h - 16 * sc);
     ctx.textAlign = "left";
