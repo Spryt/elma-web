@@ -78,13 +78,13 @@ Each pack keeps its own best-time table; completed/count is shown in the menu.
 
 - `index.html` — the whole UI shell (single page, inline CSS)
 - `js/vec.js` — 2D vector helpers
-- `js/level.js` — built-in tutorial levels
+- `js/level.js` — built-in fallback/tutorial levels (`makeLevel`, `makeTutorial1/2`)
 - `js/levfile.js` — `.lev` parser (v14) with physics coordinates (`y_phys = -y_file`)
 - `js/physics.js` — the physics engine (LEPTET.CPP + physics_move/collision + vect2)
 - `js/lgr.js` — `Default.lgr` art loader (PNG) + sprite helpers
 - `js/render2.js` — level renderer (sky, ground, grass, pictures), objects, bike
   and rider (port of recRender.js)
-- `js/sound.js` — procedural sound
+- `js/sound.js` — WebAudio playback of the original Elma WAV samples (`snd/`)
 - `js/menu.js` — main menu, settings
 - `js/win.js` — finish screen, best times, leaderboard
 - `js/recorder.js` — replay recording/playback, ghost interpolation, IndexedDB storage
@@ -107,8 +107,8 @@ Each pack keeps its own best-time table; completed/count is shown in the menu.
   textures, pictures.
 - **Graphics** — original `Default.lgr` art converted to PNG: ground/sky textures,
   grass, bike sprite, rider, wheels, apples, flags.
-- **Sound** — procedural WebAudio: engine (frequency driven by physics), volt,
-  bounces, apples, death, finish.
+- **Sound** — original Elma WAV samples played through WebAudio: engine loop
+  (pitch driven by the physics), volt, bounces, apples, death, finish.
 - **Camera** — like the original: hard follow, bike at 15%/85% of screen width,
   0.5 s flip-over; internal resolution 1280×960 (2× of 640×480).
 - **Ghosts** — your personal best ghost rider (or your last run until you set a
