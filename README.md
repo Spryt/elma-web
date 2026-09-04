@@ -4,7 +4,7 @@ A faithful, dependency-free reconstruction of the classic **Elasto Mania** that 
 entirely in the browser. No build step, no server-side code — open `index.html` (or the
 GitHub Pages URL) and ride.
 
-**▶ [Play it now](https://spryt.github.io/elma-web/)** <!-- replace with the real URL -->
+**▶ [Play it now](https://spryt.github.io/elma-web/)**
 
 ## What's different from the original
 
