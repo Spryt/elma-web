@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elasto Mania — play the classic bike game online in your browser</title>
+<meta name="description" content="Play Elasto Mania in your browser — a faithful fan-made web port of the classic 2000s motorbike game. 700+ levels, original physics, ghost riders, world-record replays, death rewind. No install, no download.">
+<meta name="keywords" content="Elasto Mania, elma, elma web, browser game, online game, motorbike game, trial game, elasto mania online, play elasto mania, retro game, 2000s game, bike game, physics game">
+<meta name="robots" content="index, follow">
+<meta name="author" content="elma-web contributors">
+<link rel="canonical" href="https://USERNAME.github.io/elma-web/">
+<meta name="theme-color" content="#0a0f1a">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Elasto Mania — browser port">
+<meta property="og:title" content="Elasto Mania — play online in your browser">
+<meta property="og:description" content="Faithful web port of the classic Elasto Mania bike game: original physics, 700+ levels, ghost riders, WR replays and death rewind. Free, no install.">
+<meta property="og:url" content="https://USERNAME.github.io/elma-web/">
+<!-- Twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Elasto Mania — play online in your browser">
+<meta name="twitter:description" content="Faithful web port of the classic Elasto Mania bike game: original physics, 700+ levels, ghost riders, WR replays and death rewind.">
+<!-- Structured data: VideoGame -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Elasto Mania",
+  "alternateName": "Elma",
+  "description": "A faithful, fan-made browser port of the classic 2D motorbike trial game Elasto Mania. Original physics, 700+ community levels, personal-best and world-record ghost riders, world-record replays and a death-rewind feature.",
+  "genre": ["Sports", "Racing", "Platformer", "Trial"],
+  "gamePlatform": "Web Browser",
+  "applicationCategory": "Game",
+  "playMode": "SinglePlayer",
+  "operatingSystem": "Any (web browser)",
+  "inLanguage": "en",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Organization", "name": "elma-web contributors" },
+  "about": {
+    "@type": "VideoGame",
+    "name": "Elasto Mania",
+    "author": { "@type": "Person", "name": "Balazs Rozsa" },
+    "publisher": { "@type": "Organization", "name": "F2 / Pixel" }
+  }
+}
+</script>
+<style>
+  html, body { margin: 0; padding: 0; background: #0a0f1a; color: #cfe3ff;
+    font-family: ui-monospace, Menlo, monospace; }
+  #wrap { display: flex; flex-direction: column; align-items: center; padding: 10px; }
+  canvas {
+    border: 1px solid #2a3350;
+    image-rendering: pixelated;
+    /* internal 1280x960 (2x 640x480), scaled to fit */
+    width: min(100vw - 20px, calc((100vh - 60px) * 4 / 3));
+    cursor: none;
+  }
+  canvas.cursor-visible {
+    cursor: default;
+  }
+  #hint { font-size: 12px; color: #7d8db0; margin-top: 6px; text-align: center; }
+  /* SEO-only content: visually hidden, still crawlable and readable by
+     screen readers. Does not affect the game layout. */
+  .seo-only {
+    position: absolute; width: 1px; height: 1px; margin: -1px;
+    padding: 0; overflow: hidden; clip: rect(0 0 0 0);
+    white-space: nowrap; border: 0;
+  }
+</style>
+</head>
+<body>
+<main class="seo-only" aria-hidden="false">
+  <h1>Elasto Mania — browser port</h1>
+  <p>Play Elasto Mania online, free, right in your browser. Elasto Mania
+  (also known as Elma) is the classic 2D motorcycle trial game created by
+  Balazs Rozsa and released in 2000. This fan-made web port faithfully
+  recreates the original physics engine and lets you ride the original
+  54 Internal levels plus 700+ community levels — OLP, Lost Internals, ALP,
+  Elma Online level pack, ElmaPack and Abula — with no installation and no
+  download.</p>
+  <p>Features: original Elasto Mania physics, ghost riders (your personal
+  best and world-record ghosts, both optional), world-record replays of the
+  classic internal levels, per-level best times with WR reference times for
+  every map, alternative level packs, dimmed brick/stone backgrounds on wall
+  levels such as 29 Headbanger and 40 Double Trouble, and a death-rewind
+  (3 tries, +5 s penalty) that helps most on long runs.</p>
+  <p>Controls: arrow up gas, arrow down brake, arrow left/right volt,
+  Alt turn, R restart, Esc pause, Tab level select.</p>
+  <p>Original source code: <a href="https://github.com/elastomania/elma-classic">github.com/elastomania/elma-classic</a>.
+  History of the game (1994–2018): <a href="https://televisio.org/en/60-history-of-elasto-mania-c-1994-2018">the history of Elasto Mania</a>.</p>
+</main>
+<div id="wrap">
+  <canvas id="game" width="1280" height="960"></canvas>
+  <div id="hint">↑ gas · ↓ brake · ←/→ volt · Alt turn · R restart · Esc pause · Tab levels</div>
+</div>
+
+<script src="js/vec.js?v=29"></script>
+<script src="js/level.js?v=31"></script>
+<script src="js/levfile.js?v=30"></script>
+<script src="js/physics.js?v=31"></script>
+<script src="js/lgr.js?v=37"></script>
+<script src="js/render.js?v=29"></script>
+<script src="js/render2.js?v=162"></script>
+<script src="js/sound.js?v=30"></script>
+<script src="js/win.js?v=3"></script>
+<script src="js/recorder.js?v=4"></script>
+<script src="js/menu.js?v=2"></script>
+<script src="js/elmapack.js?v=1"></script>
+<script src="js/main.js?v=38"></script>
+<script>
+  // boot() is async; window.Game is set inside it once the game object exists
+  EM.Main.boot(document.getElementById("game"));
+  window.runAutotest = function () {
+    const results = EM.Main.autotest(window.Game);
+    window.__autotest = results;
+    console.table(results.map(r => ({
+      name: r.name,
+      status: r.status,
+      apples: r.apples,
+      t: r.t,
+      ok: r.ok !== undefined ? r.ok : null,
+    })));
+    return results;
+  };
+</script>
+</body>
+</html>
