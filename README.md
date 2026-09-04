@@ -59,6 +59,7 @@ Or just open `index.html` directly — there are no network dependencies at runt
 
 - Original game source code (reference): <https://github.com/elastomania/elma-classic>
 - The history of Elasto Mania (1994–2018): <https://televisio.org/en/60-history-of-elasto-mania-c-1994-2018>
+- Play the DOS port in your browser: <https://dos.zone/elastomania/>
 
 ## Level packs
 
@@ -106,11 +107,17 @@ Each pack keeps its own best-time table; completed/count is shown in the menu.
   ALP, EOL, ElmaPack and Abula packs (700+ levels total). Polygon/object parsing,
   textures, pictures.
 - **Graphics** — original `Default.lgr` art converted to PNG: ground/sky textures,
-  grass, bike sprite, rider, wheels, apples, flags.
+  grass, bike sprite, rider, wheels, apples, flags. One caveat: the **sky
+  texture/behaviour could not be reproduced exactly** as in the original — the
+  port uses a similar approach (tiled, world-anchored backdrop), but it is not
+  pixel-identical to the original engine's sky rendering.
 - **Sound** — original Elma WAV samples played through WebAudio: engine loop
   (pitch driven by the physics), volt, bounces, apples, death, finish.
 - **Camera** — like the original: hard follow, bike at 15%/85% of screen width,
-  0.5 s flip-over; internal resolution 1280×960 (2× of 640×480).
+  0.5 s flip-over; internal resolution 1280×960. The **4:3 aspect ratio is kept
+  for the original experience** — the original game shows exactly this field of
+  view, so on wider monitors you get the same view as on the 2000s CRT, with
+  letterbox bars on the sides.
 - **Ghosts** — your personal best ghost rider (or your last run until you set a
   best), plus world-record ghosts on the Internal levels.
 - **Replays** — watch your saved runs (ghost playback, frame-by-frame, speed
