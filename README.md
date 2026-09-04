@@ -60,6 +60,8 @@ Or just open `index.html` directly — there are no network dependencies at runt
 - Original game source code (reference): <https://github.com/elastomania/elma-classic>
 - The history of Elasto Mania (1994–2018): <https://televisio.org/en/60-history-of-elasto-mania-c-1994-2018>
 - Play the DOS port in your browser: <https://dos.zone/elastomania/>
+- Extra level packs and the reference WR times come from: <https://elma.online/>
+- World-record replays and the ElmaPack levels come from: <https://moposite.com/main.php>
 
 ## Level packs
 
